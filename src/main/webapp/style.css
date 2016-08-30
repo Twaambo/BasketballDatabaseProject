@@ -13,6 +13,10 @@ li {
     float: left;
 }
 
+li .search-navitem{
+	float: right;
+}
+
 li a, .dropbtn {
     display: inline-block;
     color: white;
@@ -23,10 +27,6 @@ li a, .dropbtn {
 
 li a:hover, .dropdown:hover .dropbtn {
     background-color: red;
-}
-
-li.dropdown {
-    display: inline-block;
 }
 
 .dropdown-content {
@@ -51,6 +51,8 @@ li.dropdown {
     display: block;
 }
 
-li .search-navitem{
-	float: right;
+footer{
+	position: fixed;
+	bottom: 0;
 }
+

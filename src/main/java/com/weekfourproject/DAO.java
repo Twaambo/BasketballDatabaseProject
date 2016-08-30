@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class DAO {
 
+	static final String JBDC_DRIVER ="com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/?user=root&autoReconnect=true&useSSL=false";
 	static final String USER = "root";
 	static final String PASSWORD = "root";
@@ -20,10 +21,12 @@ public class DAO {
 	public static void connToDB() {
 
 		try {
+			Class.forName(JBDC_DRIVER);
+			
 			System.out.println("Attempting to connect to the Database...");
 			CONN = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 			System.out.println("Connected to the Database");
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			System.out.println("Unable to connect to the Database!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,22 +69,22 @@ public class DAO {
 
 	}// readFromDB method
 
-	public static void writeToDB() {
+	public static void writeToDB(BasketballOfficial newOfficial) {
 		// Bypasses getting an instance of object BasksetballOfficial
 		// String lastName = "test1";
 		// String firstName = "test2";
 		// String phoneNumber = "test3";
 		// String departureLocation = "test4";
 
-		String recordToInsert = "INSERT INTO `basketball_official_schedule`.`basic_official_information`"
-				+ "(last_name, first_name, phone_number, departure_location)" + "VALUES" + "(?, ?, ?, ?" + ");";
-
 		connToDB();
 
 		BasketballOfficial officialToAdd = new BasketballOfficial();
 
-		officialToAdd = aboutOfficial();
+		officialToAdd = newOfficial;
 
+		String recordToInsert = "INSERT INTO `basketball_official_schedule`.`basic_official_information`"
+				+ "(last_name, first_name, phone_number, departure_location)" + "VALUES" + "(?, ?, ?, ?" + ");";
+		
 		try {
 			PREP_STMT = CONN.prepareStatement(recordToInsert);
 
